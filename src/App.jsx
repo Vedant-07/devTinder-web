@@ -10,6 +10,7 @@ function App() {
           <Route path="/" element={<Body />}>
             <Route path="profile" element={<Profile/>} />
             <Route path="login" element={<Login />} />
+            <Route path="feed" element={<div>feed Page here</div>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
