@@ -1,20 +1,20 @@
 import React from 'react'
 import {Outlet} from "react-router"
-import Navbar from './Navbar'
+import Navbar from './components/Navbar'
 import {useDispatch,useSelector} from 'react-redux'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { BASE_URL } from './constants/urls'
-import { addUser } from './Store/userSlice'
+import { addUser } from './utils/userSlice'
 import { useNavigate } from "react-router";
 
 const Body = () => {
   const navigate=useNavigate()
   const dispatch=useDispatch()
-  const user=useSelector((state)=>state.user.value)
+  const user=useSelector((state)=>state.user?.value)
+   console.log(user)
     const fetchUser=async()=>{
-      if(user) return
-      
+      if(user) return 
       try{
       axios.get(BASE_URL+'/profile/view',{
         withCredentials:true
@@ -32,7 +32,8 @@ const Body = () => {
   
   useEffect(()=>{
     fetchUser()
-  },[user])
+  },[])
+
   return (
     <>
     <div className=' flex flex-col h-screen '>

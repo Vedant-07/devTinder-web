@@ -1,10 +1,11 @@
 import axios from 'axios'
 import React from 'react'
 import {useSelector,useDispatch} from 'react-redux'
-import {Link} from 'react-router'
-import { BASE_URL } from './constants/urls'
-import { removeUser } from './Store/userSlice'
+import {Link,useNavigate} from 'react-router'
+import { BASE_URL } from '../constants/urls'
+import { removeUser } from '../utils/userSlice'
 const Navbar = () => {
+  const navigate=useNavigate()
   const dispatch=useDispatch()
   const user=useSelector((state)=>state.user?.value)
   const handleLogout=async()=>{
@@ -24,18 +25,23 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100">
     <div className="flex-1">
-      <Link to="/" className="btn btn-ghost text-xl">DevTinder</Link>
+      {user ? (<Link to="/" className="btn btn-ghost text-xl">DevTinder</Link>) : <Link to="/login" className="btn btn-ghost text-xl">DevTinder</Link> }
     </div>
     <div className="flex-none gap-2">
       
+
+     { user && (
+      <div className='flex items-center'>
+      <p>Welcome {user.firstName}</p>
       <div className="dropdown dropdown-end">
+        
         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar mx-7">
           <div className="w-10 rounded-full">
-            {user && ( 
+            
             <img
             alt="user profile pic"
-            src={user.profile_pic} />)
-            }
+            src={user.profile_pic} />
+            
             
           </div>
         </div>
@@ -52,6 +58,9 @@ const Navbar = () => {
           <li onClick={handleLogout}><a>Logout</a></li>
         </ul>
       </div>
+      </div>
+     )}
+
     </div>
   </div>
   )
