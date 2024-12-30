@@ -2,15 +2,16 @@ import React from "react";
 
 const UserCard = (user) => {
     
-    console.log("from Usercard "+user.user)
-    const{ firstName,lastName,age,gender,bio,skills,photoUrl} = user.user
+    
+    //check this out
+    const{ firstName,lastName,age,gender,bio,skills,profile_pic} = user.user
 
   return (
     <div className="card bg-base-200 w-96 shadow-xl">
-      {photoUrl?.length>0 &&
+      {profile_pic?.length>0 &&
       <figure>
         <img
-          src={photoUrl}
+          src={profile_pic}
           alt="photoUrl"
         />
       </figure>
@@ -20,8 +21,7 @@ const UserCard = (user) => {
         <p>{age} , {gender}</p>
         <p>{bio}</p>
         <p>Skills : {skills}</p>
-        
-      </div>
+        </div>
     </div>
   );
 };

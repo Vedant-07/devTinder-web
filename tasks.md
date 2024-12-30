@@ -1,10 +1,10 @@
 Currently 
-creating feed card
-profile edit && see the feed page UI
-If possible add the gender radio button/dropdown  in profile edit
-Add the textArea in bio
+See the request page
+See the connections page
 
 Remaining
+Add the Loading ,till the user updated values are set in the profile edit
+Remove unnecessary rerenders in profile component
 understanding the profile page update
 fetchUser function as a utility ...
 Add the toast for 3 seconds when user logs in / Signs up
