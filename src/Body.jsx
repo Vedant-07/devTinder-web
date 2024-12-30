@@ -12,7 +12,6 @@ const Body = () => {
   const navigate=useNavigate()
   const dispatch=useDispatch()
   const user=useSelector((state)=>state.user?.value)
-   console.log(user)
     const fetchUser=async()=>{
       if(user) return 
       try{
@@ -38,7 +37,7 @@ const Body = () => {
     <>
     <div className=' flex flex-col h-screen '>
     <Navbar/>
-    <div className='flex justify-center h-full items-start mt-20 '>
+    <div className='flex justify-center h-full items-start mt-16 w-full'>
     <Outlet/>
     </div>
     </div>

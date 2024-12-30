@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
+import {  useDispatch } from "react-redux";
+import { addUser} from "../utils/userSlice";
 import { BASE_URL } from "../constants/urls";
 import { useNavigate } from "react-router";
 
@@ -12,8 +12,8 @@ const Login = () => {
   const [isLoginPage, setIsLoginPage] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailID, setEmailID] = useState("");
-  const [password, setPassword] = useState("");
+  const [emailID, setEmailID] = useState("Peter@gmail.com");
+  const [password, setPassword] = useState("Peter@123");
   const [skills, setSkills] = useState("");
 
   const handleLoginANDSignUp = async () => {
