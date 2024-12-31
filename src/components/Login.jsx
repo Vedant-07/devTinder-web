@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import {  useDispatch } from "react-redux";
-import { addUser} from "../utils/userSlice";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../constants/urls";
 import { useNavigate } from "react-router";
 
@@ -38,7 +38,7 @@ const Login = () => {
     } else {
       //sign up here
       const res = await axios.post(
-        BASE_URL+"/signup",
+        BASE_URL + "/signup",
         {
           firstName,
           lastName,
@@ -77,7 +77,13 @@ const Login = () => {
               >
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
               </svg>
-              <input type="text" className="grow" placeholder="FirstName" onChange={(e)=>setFirstName(e.target.value)}  value={firstName}/>
+              <input
+                type="text"
+                className="grow"
+                placeholder="FirstName"
+                onChange={(e) => setFirstName(e.target.value)}
+                value={firstName}
+              />
             </label>
             <label className="input input-bordered flex items-center gap-2">
               <svg
@@ -89,7 +95,13 @@ const Login = () => {
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
               </svg>
 
-              <input type="text" className="grow" placeholder="LastName" onChange={(e)=>setLastName(e.target.value)}  value={lastName} />
+              <input
+                type="text"
+                className="grow"
+                placeholder="LastName"
+                onChange={(e) => setLastName(e.target.value)}
+                value={lastName}
+              />
               <span className="badge badge-info">Optional</span>
             </label>
           </>
@@ -139,7 +151,13 @@ const Login = () => {
 
           {!isLoginPage && (
             <label className="input input-bordered flex items-center gap-2 w-full">
-              <input type="text" className="grow" placeholder="SKILLS" onChange={(e)=>setSkills(e.target.value)}  value={skills} />
+              <input
+                type="text"
+                className="grow"
+                placeholder="SKILLS"
+                onChange={(e) => setSkills(e.target.value)}
+                value={skills}
+              />
               <span className="badge badge-accent">Atleast one</span>
             </label>
           )}

@@ -1,7 +1,3 @@
-Currently 
-See the request page
-See the connections page
-
 Remaining
 Add the Loading ,till the user updated values are set in the profile edit
 Remove unnecessary rerenders in profile component
@@ -15,5 +11,5 @@ Reset button in the profile page
 carousel for the users
 Add notification number in the requests
 Make an error page to redirect users back to homepage
-
-
+Shimmer effect left
+remove the console log from everywhere
