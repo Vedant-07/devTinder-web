@@ -1,13 +1,11 @@
 import React from "react";
 
 const UserCard = (user) => {
-    
-    
-    //check this out
     const{ firstName,lastName,age,gender,bio,skills,profile_pic} = user.user
+    
 
   return (
-    <div className="card bg-base-200 w-96 shadow-xl">
+    <div className="card bg-base-200 w-96 shadow-xl m-7 " >
       {profile_pic?.length>0 &&
       <figure>
         <img

@@ -13,5 +13,7 @@ fix the dropdown thing...........
 Skills a burning question,Have to found the use of Skills, im thinking of make a bubble and cross on them 
 Reset button in the profile page
 carousel for the users
+Add notification number in the requests
+Make an error page to redirect users back to homepage
 
 
