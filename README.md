@@ -61,7 +61,7 @@ The frontend interacts with the backend API hosted in the **devTinder**. Ensure 
 
 ## 🚀 Deployment
 
-The application is deployed on AWS and can be accessed at: [http://3.109.212.47](http://3.109.212.47)
+The application is deployed on AWS and can be accessed at: [http://3.110.158.211/](http://3.110.158.211/)
 
 ---
 
