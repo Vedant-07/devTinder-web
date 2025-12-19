@@ -4,9 +4,10 @@ import Navbar from "./components/Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "./constants/urls";
 import { addUser } from "./utils/userSlice";
 import { useNavigate } from "react-router";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Body = () => {
   const navigate = useNavigate();

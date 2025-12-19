@@ -2,8 +2,9 @@ import axios from "axios";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router";
-import { BASE_URL } from "../constants/urls";
 import { removeUser } from "../utils/userSlice";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const Navbar = () => {
     try {
       //delete the cookie && remove the user from the redux-store
       await axios.post(
-        BASE_URL + "/signout",
+        BASE_URL + "/auth/signout",
         {},
         {
           withCredentials: true,

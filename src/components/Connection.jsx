@@ -2,8 +2,9 @@ import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BASE_URL } from "../constants/urls";
 import UserCard from "./UserCard";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 import { addConnections } from "../utils/connectionSlice";
 
 const Connection = () => {

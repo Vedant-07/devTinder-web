@@ -3,8 +3,9 @@ import UserCard from "./UserCard";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { BASE_URL } from "../constants/urls";
 import { addUser } from "../utils/userSlice";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Profile = () => {
   const user = useSelector((store) => store.user.value);

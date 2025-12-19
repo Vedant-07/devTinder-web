@@ -3,8 +3,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { BASE_URL } from "../constants/urls";
 import { useNavigate } from "react-router";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Login = () => {
     if (isLoginPage) {
       try {
         const val = await axios.post(
-          BASE_URL + "/signin",
+          BASE_URL + "/auth/signin",
           {
             emailID: emailID,
             password: password,
@@ -38,7 +39,7 @@ const Login = () => {
     } else {
       //sign up here
       const res = await axios.post(
-        BASE_URL + "/signup",
+        BASE_URL + "/auth/signup",
         {
           firstName,
           lastName,

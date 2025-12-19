@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
 import axios from "axios";
-import { BASE_URL } from "../constants/urls";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Chat = () => {
   const { userId } = useParams();

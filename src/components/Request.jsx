@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BASE_URL } from "../constants/urls";
 import { addRequests } from "../utils/requestSlice";
 import UserCard from "./UserCard";
+
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Request = () => {
   const requests = useSelector((store) => store.requests);
