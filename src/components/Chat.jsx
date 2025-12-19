@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import axios from "axios";
+import api from "../utils/api";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -12,11 +12,9 @@ const Chat = () => {
   const currentUser = useSelector((state) => state.user?.value);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [otherUser, setOtherUser] = useState(null);
   const [socket, setSocket] = useState(null);
   const messagesEndRef = useRef(null);
 
-  // Scroll to bottom of messages
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -25,44 +23,39 @@ const Chat = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Connect to socket and fetch chat history
   useEffect(() => {
     if (!currentUser) return;
 
-    // Connect to socket
-    const newSocket = io(BASE_URL);
+    // Connect to socket with auth token
+    const token = localStorage.getItem("token");
+    const newSocket = io(BASE_URL, {
+      auth: { token }
+    });
     setSocket(newSocket);
 
-    // Join with current user ID
     newSocket.emit("join", currentUser._id);
 
-    // Listen for incoming messages
     newSocket.on("receiveMessage", (msg) => {
       if (msg.senderId === userId) {
         setMessages((prev) => [...prev, msg]);
       }
     });
 
-    // Listen for sent message confirmation
     newSocket.on("messageSent", (msg) => {
       setMessages((prev) => [...prev, msg]);
     });
 
-    // Fetch chat history
     const fetchChatHistory = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/chat/${userId}`, {
-          withCredentials: true,
-        });
+        const res = await api.get(`/chat/${userId}`);
         setMessages(res.data.messages);
       } catch (err) {
-        console.log("Error fetching chat:", err);
+        // Handle error silently
       }
     };
 
     fetchChatHistory();
 
-    // Cleanup
     return () => {
       newSocket.disconnect();
     };

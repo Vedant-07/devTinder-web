@@ -1,9 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-import { addFeed, removeFeed } from "../utils/feedSlice";
+import api from "../utils/api";
+import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCard";
 
 const Feed = () => {
@@ -12,18 +10,12 @@ const Feed = () => {
   const [requestStatus, setRequestStatus] = useState(false);
   
   const fetchFeed = async () => {
-    // Only skip if feed is already loaded with data
     if (feed && feed.length > 0) return;
     try {
-      // Request more users (limit=20)
-      const res = await axios.get(BASE_URL + "/user/feed?limit=20", {
-        withCredentials: true,
-      });
-      console.log("from user feed ");
-      console.log(res.data.data);
+      const res = await api.get("/user/feed?limit=20");
       dispatch(addFeed(res.data.data));
     } catch (err) {
-      console.log("prob. in catching fields --> " + err.message);
+      // Handle error silently
     }
   };
 
@@ -33,31 +25,16 @@ const Feed = () => {
 
   const handleRequest = async (status) => {
     try {
-      await axios.post(
-        BASE_URL + "/request/send/" + status + "/" + feed[0]._id,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+      await api.post("/request/send/" + status + "/" + feed[0]._id, {});
       setRequestStatus(true);
       setTimeout(() => {
         setRequestStatus(false);
       }, 1000);
 
-      //remove the user from feed in redux
-
-      const UpdatedFeed = feed.filter((fd) => {
-        return !(fd._id === feed[0]._id);
-      });
-      console.log("here are the updated fields");
-      console.log(feed);
-      //dispatch(removeFeed())
-      console.log(UpdatedFeed);
-      //check whether it works as patch or post
+      const UpdatedFeed = feed.filter((fd) => fd._id !== feed[0]._id);
       dispatch(addFeed(UpdatedFeed));
     } catch (err) {
-      console.log("handle request error " + err.message);
+      // Handle error silently
     }
   };
 
@@ -66,23 +43,22 @@ const Feed = () => {
       {requestStatus && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-info">
-            <span>Request sent </span>
+            <span>Request sent</span>
           </div>
         </div>
       )}
       {feed && feed.length > 0 ? (
         <div className="flex flex-col">
           <UserCard user={feed[0]} />
-          <div className=" flex justify-around  mt-4 gap-7">
+          <div className="flex justify-around mt-4 gap-7">
             <button
-              className="btn btn-primary  "
+              className="btn btn-primary"
               onClick={() => handleRequest("ignore")}
             >
               Ignore
             </button>
-
             <button
-              className="btn btn-secondary  "
+              className="btn btn-secondary"
               onClick={() => handleRequest("interested")}
             >
               Interested
@@ -90,7 +66,9 @@ const Feed = () => {
           </div>
         </div>
       ) : (
-        <>No new users Found !!!</>
+        <div className="text-center py-10 text-gray-500">
+          No new users found!
+        </div>
       )}
     </>
   );

@@ -13,8 +13,8 @@ const Login = () => {
   const [isLoginPage, setIsLoginPage] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [emailID, setEmailID] = useState("Peter@gmail.com");
-  const [password, setPassword] = useState("Peter@123");
+  const [emailID, setEmailID] = useState("");
+  const [password, setPassword] = useState("");
   const [skills, setSkills] = useState("");
 
   const handleLoginANDSignUp = async () => {
@@ -25,38 +25,36 @@ const Login = () => {
           {
             emailID: emailID,
             password: password,
-          },
-          {
-            withCredentials: true,
           }
         );
 
-        dispatch(addUser(val.data));
+        // Save token to localStorage
+        localStorage.setItem("token", val.data.token);
+        dispatch(addUser(val.data.user));
         navigate("/");
       } catch (err) {
-        console.log("LoginPage error " + err.message);
+        // Handle error - could show toast here
       }
     } else {
-      //sign up here
-      const res = await axios.post(
-        BASE_URL + "/auth/signup",
-        {
-          firstName,
-          lastName,
-          emailID,
-          password,
-          skills,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(res.data);
+      try {
+        const res = await axios.post(
+          BASE_URL + "/auth/signup",
+          {
+            firstName,
+            lastName,
+            emailID,
+            password,
+            skills,
+          }
+        );
 
-      dispatch(addUser(res.data));
-      //add the user here in redux & create its cookie
-
-      navigate("/profile");
+        // Save token to localStorage
+        localStorage.setItem("token", res.data.token);
+        dispatch(addUser(res.data.user));
+        navigate("/profile");
+      } catch (err) {
+        // Handle error - could show toast here
+      }
     }
   };
 

@@ -1,10 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import api from "../utils/api";
 import { addRequests } from "../utils/requestSlice";
 import UserCard from "./UserCard";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Request = () => {
   const requests = useSelector((store) => store.requests);
@@ -13,33 +11,10 @@ const Request = () => {
 
   const fetchRequest = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/user/requests/received", {
-        withCredentials: true,
-      });
+      const res = await api.get("/user/requests/received");
       dispatch(addRequests(res.data.data));
     } catch (err) {
-      console.log("problem in request " + err.message);
-    }
-  };
-
-  const handleReview = async (status, requestId) => {
-    try {
-      await axios.post(
-        BASE_URL + "/request/review/" + status + "/" + requestId,
-        {},
-        { withCredentials: true }
-      );
-      setRequestStatus(true);
-      setTimeout(() => {
-        setRequestStatus(false);
-      }, 1000);
-
-      const updatedRequests = requests.filter(
-        (req) => !(req.requestId === requestId)
-      );
-      dispatch(addRequests(updatedRequests));
-    } catch (err) {
-      console.log("error in sending review req " + error.message);
+      // Handle error silently
     }
   };
 
@@ -47,42 +22,57 @@ const Request = () => {
     fetchRequest();
   }, []);
 
+  const handleReview = async (status, requestId) => {
+    try {
+      await api.post("/request/review/" + status + "/" + requestId, {});
+      setRequestStatus(true);
+      setTimeout(() => {
+        setRequestStatus(false);
+      }, 1000);
+      const updatedRequests = requests.filter((r) => r.requestId !== requestId);
+      dispatch(addRequests(updatedRequests));
+    } catch (err) {
+      // Handle error silently
+    }
+  };
+
   return (
-    <div className="">
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-6">Connection Requests</h1>
       {requestStatus && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-info">
-            <span>Request sent </span>
+            <span>Request updated</span>
           </div>
         </div>
       )}
-      {requests &&
-        requests.length > 0 &&
-        requests.map((user, index) => {
-          index = user._id;
-          return (
-            <div className="mb-20 shadow-2xl transform transition-transform duration-300 hover:scale-110 hover:shadow-lg rounded-md">
-              <UserCard user={user} />
-
-              <div className=" flex justify-around gap-7 pb-4 cursor-pointer">
+      {requests && requests.length > 0 ? (
+        <div className="flex flex-col items-center gap-4">
+          {requests.map((request) => (
+            <div key={request._id} className="flex flex-col">
+              <UserCard user={request} />
+              <div className="flex justify-around mt-2 gap-4">
                 <button
-                  className="btn btn-primary  "
-                  onClick={() => handleReview("rejected", user.requestId)}
+                  className="btn btn-error"
+                  onClick={() => handleReview("rejected", request.requestId)}
                 >
                   Reject
                 </button>
-
                 <button
-                  className="btn btn-secondary  "
-                  onClick={() => handleReview("accepted", user.requestId)}
+                  className="btn btn-success"
+                  onClick={() => handleReview("accepted", request.requestId)}
                 >
                   Accept
                 </button>
               </div>
             </div>
-          );
-        })}
-      {(!requests || requests.length == 0) && <p>No new Requests found !!!</p>}
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-10 text-gray-500">
+          No pending requests
+        </div>
+      )}
     </div>
   );
 };

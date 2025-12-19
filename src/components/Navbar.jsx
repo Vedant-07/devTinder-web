@@ -1,30 +1,20 @@
-import axios from "axios";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import { removeUser } from "../utils/userSlice";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.value);
-  const handleLogout = async () => {
-    try {
-      //delete the cookie && remove the user from the redux-store
-      await axios.post(
-        BASE_URL + "/auth/signout",
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      dispatch(removeUser());
-      navigate("/login");
-    } catch (err) {
-      console.log("problem in logout " + err);
-    }
+  
+  const handleLogout = () => {
+    // Clear localStorage token and Redux state
+    localStorage.removeItem("token");
+    dispatch(removeUser());
+    navigate("/login");
   };
+  
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">

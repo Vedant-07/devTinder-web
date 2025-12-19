@@ -2,10 +2,8 @@ import React, { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import api from "../utils/api";
 import { addUser } from "../utils/userSlice";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Profile = () => {
   const user = useSelector((store) => store.user.value);
@@ -26,14 +24,10 @@ const Profile = () => {
   const fetchUser = async () => {
     if (user) return;
     try {
-      const res = await axios.get(BASE_URL + "/profile/view", {
-        withCredentials: true,
-      });
-      console.log("Updating the store from Profile");
+      const res = await api.get("/profile/view");
       dispatch(addUser(res.data));
     } catch (err) {
       navigate("/login");
-      console.log("Error ==> fetchUser: " + err.message);
     }
   };
 
@@ -41,7 +35,6 @@ const Profile = () => {
     fetchUser();
   }, []);
 
-  // Synchronize form states with user data
   useEffect(() => {
     if (user) {
       setFirstName(user.firstName || "");
@@ -59,22 +52,23 @@ const Profile = () => {
 
   const handleUpdate = async () => {
     try {
-      const res = await axios.patch(
-        BASE_URL + "/profile/edit",
-        { firstName, lastName, age, bio, gender, profile_pic, skills },
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await api.patch("/profile/edit", {
+        firstName,
+        lastName,
+        age,
+        bio,
+        gender,
+        profile_pic,
+        skills,
+      });
 
-      console.log("Updated data: ", res.data);
       dispatch(addUser(res.data));
       setCheckStatus(true);
       setTimeout(() => {
         setCheckStatus(false);
       }, 3000);
     } catch (err) {
-      console.log("Error in handleUpdate ===> " + err.message);
+      // Handle error silently
     }
   };
 
