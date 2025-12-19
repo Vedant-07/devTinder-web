@@ -23,13 +23,18 @@ const Connection = () => {
   }, []);
 
   return (
-    <div>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-6">My Connections</h1>
       {users && users.length > 0 ? (
-        users.map((user) => {
-          return <UserCard user={user} />;
-        })
+        <div className="flex flex-col items-center gap-4">
+          {users.map((user) => (
+            <UserCard key={user._id} user={user} showChatButton={true} />
+          ))}
+        </div>
       ) : (
-        <> No Connections present .....</>
+        <div className="text-center py-10 text-gray-500">
+          No Connections yet. Start swiping!
+        </div>
       )}
     </div>
   );

@@ -60,7 +60,8 @@ const Login = () => {
   };
 
   return (
-    <div className="card bg-base-100 w-96 shadow-xl">
+    <div className="min-h-[80vh] flex items-center justify-center">
+      <div className="card bg-base-100 w-96 shadow-xl">
       <div className="card-body ">
         <h1 className="card-title mb-4">
           {isLoginPage ? "Login Page" : "Sign up Page"}
@@ -178,6 +179,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

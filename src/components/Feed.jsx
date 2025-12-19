@@ -9,10 +9,13 @@ const Feed = () => {
   const feed = useSelector((state) => state.feed);
   const dispatch = useDispatch();
   const [requestStatus, setRequestStatus] = useState(false);
+  
   const fetchFeed = async () => {
-    if (feed) return;
+    // Only skip if feed is already loaded with data
+    if (feed && feed.length > 0) return;
     try {
-      const res = await axios.get(BASE_URL + "/user/feed", {
+      // Request more users (limit=20)
+      const res = await axios.get(BASE_URL + "/user/feed?limit=20", {
         withCredentials: true,
       });
       console.log("from user feed ");

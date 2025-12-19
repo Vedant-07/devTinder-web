@@ -1,3 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Minimal improvements - just subtle enhancements */
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Smooth transitions on interactive elements */
+.btn,
+.input,
+.card {
+    transition: all 0.2s ease;
+}
+
+/* Slightly improved shadows */
+.shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
