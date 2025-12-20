@@ -59,9 +59,9 @@ The frontend interacts with the backend API hosted in the **devTinder**. Ensure 
 
 ---
 
-## 🚀 Deployment
+## 🌟 Live Demo
 
-The application is deployed on AWS and can be accessed at: [http://3.110.158.211/](http://3.110.158.211/)
+Check out the live application: [https://dev-tinder-appln.vercel.app](https://dev-tinder-appln.vercel.app)
 
 ---
 

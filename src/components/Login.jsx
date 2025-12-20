@@ -60,7 +60,7 @@ const Login = () => {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
-      <div className="card bg-base-100 w-96 shadow-xl">
+      <div className="card bg-base-100 w-[28rem] shadow-xl">
       <div className="card-body ">
         <h1 className="card-title mb-4">
           {isLoginPage ? "Login Page" : "Sign up Page"}
@@ -68,7 +68,7 @@ const Login = () => {
 
         {!isLoginPage && (
           <>
-            <label className="input input-bordered flex items-center gap-2">
+            <label className="input input-bordered flex items-center gap-2 w-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -85,7 +85,7 @@ const Login = () => {
                 value={firstName}
               />
             </label>
-            <label className="input input-bordered flex items-center gap-2">
+            <label className="input input-bordered flex items-center gap-2 w-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
